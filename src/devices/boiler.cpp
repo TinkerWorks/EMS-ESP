@@ -80,6 +80,7 @@ Boiler::Boiler(uint8_t device_type, int8_t device_id, uint8_t product_id, const 
     register_mqtt_cmd(F("wwcircmode"), [&](const char * value, const int8_t id) { return set_warmwater_circulation_mode(value, id); });
     register_mqtt_cmd(F("flowtemp"), [&](const char * value, const int8_t id) { return set_flow_temp(value, id); });
     register_mqtt_cmd(F("wwsettemp"), [&](const char * value, const int8_t id) { return set_warmwater_temp(value, id); });
+    register_mqtt_cmd(F("heatingcircuitpower"), [&](const char * value, const int8_t id) { return set_heating_circuit_power(value, id); });
     register_mqtt_cmd(F("heatingactivated"), [&](const char * value, const int8_t id) { return set_heating_activated(value, id); });
     register_mqtt_cmd(F("heatingtemp"), [&](const char * value, const int8_t id) { return set_heating_temp(value, id); });
     register_mqtt_cmd(F("burnmaxpower"), [&](const char * value, const int8_t id) { return set_max_power(value, id); });
@@ -1429,6 +1430,18 @@ bool Boiler::set_flow_temp(const char * value, const int8_t id) {
 
     LOG_INFO(F("Setting boiler flow temperature to %d C"), v);
     write_command(EMS_TYPE_UBASetPoints, 0, v, EMS_TYPE_UBASetPoints);
+
+    return true;
+}
+
+bool Boiler::set_heating_circuit_power(const char * value, const int8_t id) {
+    int v = 0;
+    if (!Helpers::value2number(value, v)) {
+        return false;
+    }
+
+    LOG_INFO(F("Setting heating circuit power to %d %%"), v);
+    write_command(EMS_TYPE_UBASetPoints, 1, v, EMS_TYPE_UBASetPoints);
 
     return true;
 }

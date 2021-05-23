@@ -222,6 +222,7 @@ class Boiler : public EMSdevice {
     bool set_warmwater_circulation_mode(const char * value, const int8_t id);
     bool set_warmwater_temp(const char * value, const int8_t id);
     bool set_flow_temp(const char * value, const int8_t id);
+    bool set_heating_circuit_power(const char * value, const int8_t id);
     bool set_heating_activated(const char * value, const int8_t id);
     bool set_heating_temp(const char * value, const int8_t id);
     bool set_min_power(const char * value, const int8_t id);
